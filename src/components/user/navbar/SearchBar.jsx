@@ -9,6 +9,7 @@ const SearchBar = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [showResults, setShowResults] = useState(false);
     const searchRef = useRef(null);
+    
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
             if (inputValue.trim()) {
@@ -20,6 +21,7 @@ const SearchBar = () => {
 
         return () => clearTimeout(delayDebounceFn);
     }, [inputValue]);
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (searchRef.current && !searchRef.current.contains(event.target)) {
@@ -69,19 +71,19 @@ const SearchBar = () => {
                 <input
                     type="text"
                     placeholder="Search gifts for your loved ones..."
-                    className="w-full px-4 py-3 pl-10 pr-10 border-2 border-pink-200 rounded-full 
-                               focus:outline-none focus:ring-2 focus:ring-pink-500 
+                    className="w-full px-4 py-3 pl-10 pr-10 border-2 border-purple-200 rounded-full 
+                               focus:outline-none focus:ring-2 focus:ring-purple-500 
                                transition-all duration-300 ease-in-out"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onFocus={() => setShowResults(searchResult.length > 0)}
                 />
-                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-pink-400" />
+                <FaSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-purple-400" />
                 {inputValue && (
                     <button 
                         onClick={clearSearch} 
                         className="absolute right-3 top-1/2 -translate-y-1/2 
-                                   text-pink-400 hover:text-pink-600 transition-colors"
+                                   text-purple-400 hover:text-purple-600 transition-colors"
                     >
                         <FaTimes />
                     </button>
@@ -100,7 +102,7 @@ const SearchBar = () => {
                                    max-h-96 overflow-y-auto"
                     >
                         {isLoading ? (
-                            <div className="p-4 text-center text-pink-500">
+                            <div className="p-4 text-center text-purple-500">
                                 Searching...
                             </div>
                         ) : searchResult.length === 0 ? (
@@ -117,7 +119,7 @@ const SearchBar = () => {
                                     >
                                         <li 
                                             className="flex items-center p-3 
-                                                       hover:bg-pink-50 
+                                                       hover:bg-purple-50 
                                                        transition-colors 
                                                        cursor-pointer 
                                                        border-b last:border-b-0"
@@ -131,7 +133,7 @@ const SearchBar = () => {
                                                 <h3 className="font-semibold text-gray-800">
                                                     {result.name}
                                                 </h3>
-                                                <p className="text-pink-600 font-medium">
+                                                <p className="text-purple-600 font-medium">
                                                     {result.price}
                                                 </p>
                                                 <span className="text-xs text-gray-500">

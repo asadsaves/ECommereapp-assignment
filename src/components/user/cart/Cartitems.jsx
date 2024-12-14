@@ -162,8 +162,8 @@ const CartItems = () => {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center h-64 bg-pink-50">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-pink-600"></div>
+      <div className="flex justify-center items-center h-64 bg-purple-50">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-purple-600"></div>
       </div>
     );
   }
@@ -175,7 +175,7 @@ const CartItems = () => {
         <p className="text-lg text-gray-600 mb-4">{error || 'Your cart is empty'}</p>
         <Link 
           to="/shop" 
-          className="px-4 py-2 bg-pink-500 text-white rounded-md hover:bg-pink-600 transition-colors"
+          className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors"
         >
           Continue Shopping
         </Link>
@@ -260,60 +260,44 @@ const CartItems = () => {
               placeholder="Enter voucher code"
               value={voucher}
               onChange={(e) => setVoucher(e.target.value)}
-              className="flex-grow border rounded-md px-3 py-2"
+              className="border p-2 rounded-md w-full"
             />
-            <button 
-              className="bg-pink-500 text-white px-4 py-2 rounded-md hover:bg-pink-600" 
+            <button
               onClick={handleVoucherRedeem}
+              className="px-4 py-2 bg-purple-500 text-white rounded-md hover:bg-purple-600 transition-colors"
             >
-              Redeem
+              Apply
             </button>
           </div>
-          
+
+          <div className="flex justify-between">
+            <span className="text-sm text-gray-600">Subtotal</span>
+            <span className="font-medium text-base">Rs. {cartItems.reduce((total, item) => {
+              return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
+            }, 0).toFixed(2)}</span>
+          </div>
           {discountInfo.message && (
-            <div className={`text-sm ${discountInfo.code ? 'text-green-600' : 'text-red-600'}`}>
-              {discountInfo.message}
-            </div>
+            <div className="text-sm text-purple-600">{discountInfo.message}</div>
           )}
-          
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span>Subtotal</span>
-              <span>Rs. {cartItems.reduce((total, item) => 
-                total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
-                0).toFixed(2)}</span>
-            </div>
-            {discountInfo.percentage > 0 && (
-              <div className="flex justify-between text-green-600">
-                <span>Discount ({discountInfo.percentage * 100}%)</span>
-                <span>- Rs. {(cartItems.reduce((total, item) => 
-                  total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity), 
-                  0) * discountInfo.percentage).toFixed(2)}</span>
-              </div>
-            )}
-            <div className="flex justify-between">
-              <span>Shipping</span>
-              <span>Rs. 0.00</span>
-            </div>
-            <div className="flex justify-between font-bold text-base">
-              <span>Total</span>
-              <span>Rs. {calculateTotal()}</span>
-            </div>
+          <div className="flex justify-between">
+            <span className="font-medium">Total</span>
+            <span className="font-semibold text-lg">Rs. {calculateTotal()}</span>
           </div>
-          
-          <Link 
-            to={'/checkout'}
-            state={{
-              total: calculateTotal(),
-              discount: discountInfo.percentage
-            }}
-            className="block"
-          >
-            <button className="w-full bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600">
-              Proceed to Checkout
-            </button>
-          </Link>
         </div>
+      </div>
+
+      <div className="flex justify-between items-center space-x-4">
+        <Link
+          to="/shop"
+          className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
+        >
+          Continue Shopping
+        </Link>
+        <button
+          className="px-6 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 transition-colors"
+        >
+          Checkout
+        </button>
       </div>
     </div>
   );

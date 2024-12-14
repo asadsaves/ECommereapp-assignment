@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react"; 
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import AOS from "aos";
@@ -15,8 +15,7 @@ const ScrollProgress = () => {
   useEffect(() => {
     const updateScrollProgress = () => {
       const currentScroll = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress((currentScroll / scrollHeight) * 100);
     };
 
@@ -46,30 +45,48 @@ const HomePage = () => {
 
   const productCategories = [
     {
-      img: "https://i.pinimg.com/originals/96/24/6e/96246e3c133e6cb5ae4c7843f9e45b22.jpg",
-      title: "Stationery",
-      description: "Elevate your workspace with our premium stationery.",
-      category: "Stationery"
+      img: "https://i.etsystatic.com/23250428/r/il/5bd21e/3082032032/il_1080xN.3082032032_pdx7.jpg",
+      title: "Sarees",
+      description: "Elegant sarees in a variety of colors and designs for every occasion.",
+      category: "Sarees"
     },
     {
-      img: "https://tse1.mm.bing.net/th?id=OIP.EYAqW5p_HzCoXKq1dXvGyQHaFj&pid=Api&P=0&h=180",
-      title: "Gift Boxes",
-      description: "Curated gifts that speak volumes of your affection.",
-      category: "Gift Boxes"
+      img: "https://i.pinimg.com/originals/a6/68/62/a6686287f735c366f66f0285fe6f24ff.jpg",
+      title: "Girls' Wear",
+      description: "Trendy and comfortable girls' clothing for every young fashionista.",
+      category: "Girls' Wear"
     },
     {
-      img: "https://tse3.mm.bing.net/th?id=OIP.90zsFkK9l2Nttf3fQu12ZwHaE8&pid=Api&P=0&h=180",
-      title: "Books",
-      description: "Transform spaces with our sophisticated decor books.",
-      category: "Books"
+      img: "https://c4.wallpaperflare.com/wallpaper/420/433/73/keanu-reeves-men-actor-john-wick-film-stills-hd-wallpaper-preview.jpg",
+      title: "Mens' Wear",
+      description: "Discover smart, formal, and casual wear for modern men.",
+      category: "Mens' Wear"
+    },
+    {
+      img: "https://img.freepik.com/premium-photo/boy-elegant-indian-outfit_878783-18054.jpg",
+      title: "Boys' Wear",
+      description: "Stylish and durable boys' clothing for everyday wear.",
+      category: "Boys' Wear"
+    },
+    {
+      img: "https://i.zoomtventertainment.com/story/Billie_Eilish.png?tr=w-600,h-450,fo-auto", 
+      title: "Ganzy Clothes",
+      description: "Comfortable ganzy clothes perfect for casual or relaxed settings.",
+      category: "Ganzy Clothes"
+    },
+    {
+      img: "https://imgk.timesnownews.com/story/77253950_105976820747040_3655116824283934562_n.jpg",
+      title: "Casual Wear",
+      description: "Casual and comfortable clothing for a laid-back, stylish look.",
+      category: "Casual Wear"
     }
   ];
 
   return (
     <>
       <Helmet>
-        <title>Mera Bestie | Unique Gifting Experience</title>
-        <meta name="description" content="Discover unique gifts and thoughtful collections for every occasion." />
+        <title>SaiFashionZone by Raiba | Trendy Clothing for Everyone</title>
+        <meta name="description" content="Explore our stylish collection of sarees, girls' wear, boys' wear, and ganzy clothes." />
       </Helmet>
       <ScrollProgress />
       <Navbar />
@@ -78,8 +95,8 @@ const HomePage = () => {
         <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
           <div className="absolute inset-0 z-0">
             <motion.img
-              src="https://cdn.wallpapersafari.com/89/8/lybQgH.jpg"
-              alt="Elegant Gift Background"
+              src="https://onedesblog.com/wp-content/uploads/2021/07/sunset-pastel-sky-minimalist-wallpaper.jpg"
+              alt="Fashion Background"
               className="w-full h-full object-cover filter brightness-50"
               initial={{ scale: 1.1 }}
               animate={{ scale: 1 }}
@@ -95,10 +112,10 @@ const HomePage = () => {
           >
             <div className="bg-white/20 backdrop-blur-md border border-white/30 p-12 md:p-16 rounded-3xl shadow-2xl text-center">
               <h1 className="mb-6 text-5xl md:text-6xl font-extrabold text-white tracking-tight bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500 text-transparent">
-                Crafting Memorable Moments
+                SaiFashionZone by Raiba
               </h1>
               <p className="mb-8 text-xl text-white/90 max-w-2xl mx-auto">
-                Transforming ordinary moments into extraordinary memories with our curated collections
+                Discover the latest trends in clothing, from sarees to stylish wear for everyone.
               </p>
               <div className="space-x-4 flex justify-center">
                 <Link to="/about">
@@ -124,7 +141,7 @@ const HomePage = () => {
           </motion.div>
         </section>
 
-        {/* Product Categories Section with Refined Styling */}
+        {/* Product Categories Section */}
         <section className="px-4 py-20 bg-gray-50">
           <div className="container mx-auto max-w-6xl">
             <motion.div
@@ -139,7 +156,7 @@ const HomePage = () => {
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-pink-500 to-blue-500 mx-auto mb-6"></div>
               <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-                Discover meticulously crafted categories designed to inspire and delight
+                Discover our handpicked categories designed to elevate your style
               </p>
             </motion.div>
 
@@ -168,19 +185,17 @@ const HomePage = () => {
                       visible: { opacity: 1, y: 0 }
                     }}
                   >
-                    <div className="relative h-80 overflow-hidden">
+                    <div className="relative w-full h-[300px]">  {/* Fixed height */}
                       <img
                         src={category.img}
                         alt={category.title}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                        loading="lazy"
+                        className="w-full h-full object-cover"
                       />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-200"></div>
                     </div>
-                    <div className="p-6 text-center bg-white">
-                      <h3 className="text-2xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
-                        {category.title}
-                      </h3>
-                      <p className="text-gray-600">{category.description}</p>
+                    <div className="p-6">
+                      <h3 className="text-2xl font-bold mb-2 text-gray-900">{category.title}</h3>
+                      <p className="text-sm text-gray-600">{category.description}</p>
                     </div>
                   </motion.div>
                 </Link>
@@ -189,48 +204,35 @@ const HomePage = () => {
           </div>
         </section>
 
-        {/* Vision Section with Modern Overlay Design */}
-        <section className="relative min-h-[80vh] flex items-center" data-aos="fade-up">
-          <div className="absolute inset-0 z-0">
-            <img
-              src="https://tse3.mm.bing.net/th?id=OIP.RNJBshhRJcxPoSt2Slj5bAHaEK&pid=Api&P=0&h=180"
-              alt="Vision Background"
-              className="w-full h-full object-cover filter brightness-50"
-              loading="lazy"
-            />
-          </div>
+        {/* Vision Section */}
+<section className="relative min-h-[400px] bg-gradient-to-r from-purple-100 to-purple-200 text-gray-800 py-20">
+  <div className="container mx-auto text-center">
+    <motion.h3
+      className="text-3xl md:text-4xl font-semibold mb-6 leading-tight text-purple-800"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      Our Vision for Your Style Journey
+    </motion.h3>
+    <p className="text-lg max-w-2xl mx-auto mb-8 text-gray-600">
+      We aim to provide timeless, comfortable, and stylish clothing, bringing confidence and elegance to every individual.
+    </p>
+    <Link to="/shop">
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className="bg-transparent border-2 border-purple-800 text-purple-800 hover:bg-purple-800 hover:text-white px-8 py-3 rounded-full uppercase text-sm font-semibold transition-all"
+      >
+        Shop Now
+      </motion.button>
+    </Link>
+  </div>
+</section>
 
-          <div className="container relative z-10 mx-auto max-w-6xl px-4">
-            <motion.div
-              className="bg-white/20 backdrop-blur-md border border-white/30 p-12 md:p-16 rounded-3xl max-w-2xl mx-auto text-center shadow-2xl"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 1, ease: "easeOut" }}
-            >
-              <h2 className="text-5xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-blue-500">
-                Our Vision
-              </h2>
-              <p className="text-xl text-white/90 mb-10 leading-relaxed">
-                We believe in creating more than just products – we craft experiences that connect hearts, 
-                celebrate relationships, and turn ordinary moments into extraordinary memories. 
-                Our mission is to be your partner in expressing love, appreciation, and thoughtfulness.
-              </p>
-              <Link to="/about">
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-gradient-to-r from-pink-500 to-blue-500 text-white hover:opacity-90 px-12 py-4 rounded-full uppercase text-sm tracking-wider font-semibold shadow-xl transition-all"
-                >
-                  Our Journey
-                </motion.button>
-              </Link>
-            </motion.div>
-          </div>
-        </section>
 
-        <Footer />
       </div>
+      <Footer />
     </>
   );
 };

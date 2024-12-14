@@ -7,9 +7,9 @@ import Navbar from '../../components/user/navbar/navbar';
 import { useLocation } from 'react-router-dom';
 
 const Checkout = () => {
-  const location = useLocation()
-  const total = parseFloat(location.state?.total || 0)
-  const discount = parseFloat(location.state?.discount || 0)
+  const location = useLocation();
+  const total = parseFloat(location.state?.total || 0);
+  const discount = parseFloat(location.state?.discount || 0);
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,10 +22,13 @@ const Checkout = () => {
     phone: ''
   });
   const [saveAddress, setSaveAddress] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   useEffect(() => {
     const savedAddress = localStorage.getItem('savedShippingAddress');
     const savedSaveAddressPreference = localStorage.getItem('saveAddressPreference');
-    
+
     if (savedAddress) {
       try {
         const parsedAddress = JSON.parse(savedAddress);
@@ -75,7 +78,7 @@ const Checkout = () => {
       const productPromises = Object.values(groupedItems).map(async (item) => {
         const productResponse = await fetch(`https://ecommerse-assingment-backend.onrender.com/product/${item.productId}`);
         const productData = await productResponse.json();
-        
+
         if (productData.success) {
           return {
             ...productData.product,
@@ -100,7 +103,7 @@ const Checkout = () => {
       ...address,
       [name]: value
     };
-    
+
     setAddress(updatedAddress);
 
     if (saveAddress) {
@@ -130,7 +133,7 @@ const Checkout = () => {
 
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      return total + (parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity);
+      return total + (item.price * item.quantity);
     }, 0);
   };
 
@@ -140,6 +143,12 @@ const Checkout = () => {
   };
 
   const handlePlaceOrder = async () => {
+    if (!isAddressValid()) {
+      setErrorMessage('Please fill in all fields before placing your order.');
+      return;
+    }
+
+    setOrderLoading(true);
     const userId = sessionStorage.getItem('userId');
 
     if (saveAddress) {
@@ -156,6 +165,9 @@ const Checkout = () => {
         });
       } catch (err) {
         console.error('Error saving address:', err);
+        setOrderLoading(false);
+        setErrorMessage('Failed to save address.');
+        return;
       }
     }
 
@@ -185,7 +197,7 @@ const Checkout = () => {
       });
 
       const data = await response.json();
-      
+
       if (data.message === 'Order placed successfully') {
         confetti({
           particleCount: 100,
@@ -197,9 +209,14 @@ const Checkout = () => {
         setTimeout(() => {
           navigate('/cart');
         }, 5000);
+      } else {
+        setErrorMessage('Failed to place order. Please try again.');
       }
     } catch (err) {
       console.error('Error placing order:', err);
+      setErrorMessage('Failed to place order. Please try again.');
+    } finally {
+      setOrderLoading(false);
     }
   };
 
@@ -211,13 +228,12 @@ const Checkout = () => {
     );
   }
 
-  return (      
+  return (
     <div className="bg-gray-50 min-h-screen">
       <Helmet>
-        <title>Checkout | Mera Bestie</title>
+        <title>Checkout | SaiFashionZone</title>
       </Helmet>
-      <Navbar/>
-      
+      <Navbar />
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Address Section */}
@@ -226,7 +242,6 @@ const Checkout = () => {
               <MapPin className="text-pink-600 w-8 h-8" />
               <h2 className="text-3xl font-bold text-gray-800">Shipping Details</h2>
             </div>
-            
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-4">
                 <div>
@@ -250,7 +265,6 @@ const Checkout = () => {
                   />
                 </div>
               </div>
-              
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">State</label>
@@ -263,7 +277,7 @@ const Checkout = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Pincode</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Pin Code</label>
                   <input
                     type="text"
                     name="pincode"
@@ -273,116 +287,80 @@ const Checkout = () => {
                   />
                 </div>
               </div>
-              
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={address.phone}
-                  onChange={handleAddressChange}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300"
-                />
-              </div>
-              
-              <div className="md:col-span-2 flex items-center space-x-3">
-                <input
-                  type="checkbox"
-                  id="saveAddress"
-                  checked={saveAddress}
-                  onChange={handleSaveAddressToggle}
-                  className="text-pink-600 focus:ring-pink-500 rounded"
-                />
-                <label htmlFor="saveAddress" className="text-sm text-gray-700">
-                  Save this address for future orders
-                </label>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    value={address.phone}
+                    onChange={handleAddressChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:outline-none transition-all duration-300"
+                  />
+                </div>
               </div>
             </div>
+            <div className="mt-6 flex items-center">
+              <input
+                type="checkbox"
+                checked={saveAddress}
+                onChange={handleSaveAddressToggle}
+                className="mr-2"
+              />
+              <span className="text-sm text-gray-600">Save address for future orders</span>
+            </div>
           </div>
+
+          {/* Order Summary Section */}
           <div className="md:w-1/3 bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center mb-6 space-x-4">
               <ShoppingCart className="text-pink-600 w-8 h-8" />
               <h2 className="text-3xl font-bold text-gray-800">Order Summary</h2>
             </div>
-            
-            <div className="space-y-4 max-h-96 overflow-y-auto">
-              {cartItems.map((item) => (
-                <div key={item._id} className="flex justify-between items-center border-b pb-4">
-                  <div className="flex items-center space-x-4">
-                    <img 
-                      src={item.img} 
-                      alt={item.name} 
-                      className="w-20 h-20 object-cover rounded-lg shadow-sm"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-gray-800">{item.name}</h3>
-                      <p className="text-sm text-gray-500">Qty: {item.quantity}</p>
-                    </div>
-                  </div>
-                  <p className="font-medium text-gray-800">
-                    Rs. {(parseFloat(item.price.replace(/[^\d.]/g, '')) * item.quantity).toFixed(2)}
-                  </p>
+
+            <div className="space-y-4">
+              {cartItems.map(item => (
+                <div key={item._id} className="flex justify-between">
+                  <div className="text-gray-700">{item.name}</div>
+                  <div className="text-gray-500">{item.quantity} x ₹{item.price}</div>
                 </div>
               ))}
             </div>
-            
-            <div className="mt-6 space-y-4">
-              <div className="flex justify-between text-gray-700">
-                <span>Subtotal</span>
-                <span className="font-semibold">Rs. {calculateSubtotal().toFixed(2)}</span>
-              </div>
-              
-              {/* Discount Section */}
-              {discount > 0 && (
-                <div className="flex justify-between text-gray-700">
-                  <div className="flex items-center space-x-2">
-                    <Tag className="w-5 h-5 text-green-600" />
-                    <span>Discount ({discount}%)</span>
-                  </div>
-                  <span className="font-semibold text-green-600">
-                    - Rs. {calculateDiscountAmount()}
-                  </span>
-                </div>
-              )}
-              
-              <div className="flex justify-between text-gray-700">
-                <span>Shipping</span>
-                <span className="font-semibold text-green-600">Free</span>
-              </div>
-              
-              <div className="flex justify-between text-xl font-bold border-t pt-4">
-                <span>Total</span>
-                <span className="text-pink-600">Rs. {total.toFixed(2)}</span>
-              </div>
-              
-              <button
-                onClick={handlePlaceOrder}
-                disabled={!isAddressValid()}
-                className={`w-full flex items-center justify-center space-x-2 py-4 rounded-lg transition-all duration-300 ${
-                  isAddressValid() 
-                    ? 'bg-black text-white hover:bg-gray-800 hover:shadow-lg' 
-                    : 'bg-gray-300 cursor-not-allowed opacity-50'
-                }`}
-              >
-                <CreditCard className="w-6 h-6" />
-                <span>Place Order</span>
-              </button>
+            <div className="mt-6 flex justify-between">
+              <div className="font-semibold">Subtotal:</div>
+              <div className="text-gray-700">₹{calculateSubtotal().toFixed(2)}</div>
             </div>
+            <div className="mt-2 flex justify-between">
+              <div className="font-semibold">Discount:</div>
+              <div className="text-gray-700">-₹{calculateDiscountAmount()}</div>
+            </div>
+            <div className="mt-6 flex justify-between">
+              <div className="font-semibold">Total:</div>
+              <div className="text-gray-700">₹{total}</div>
+            </div>
+
+            {/* Error message */}
+            {errorMessage && (
+              <div className="mt-4 text-red-500">{errorMessage}</div>
+            )}
+
+            {/* Place Order Button */}
+            <button
+              onClick={handlePlaceOrder}
+              disabled={orderLoading || !isAddressValid()}
+              className={`w-full mt-6 py-3 text-white font-semibold rounded-lg ${orderLoading || !isAddressValid() ? 'bg-gray-500 cursor-not-allowed' : 'bg-pink-600 hover:bg-pink-700'}`}
+            >
+              {orderLoading ? 'Placing Order...' : 'Place Order'}
+            </button>
           </div>
         </div>
+
         {showSuccess && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-            <div className="bg-white rounded-2xl p-10 text-center shadow-2xl">
-              <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-6" />
-              <h3 className="text-3xl font-bold text-gray-800 mb-4">Order Placed Successfully!</h3>
-              <p className="text-gray-600 mb-6">Your order has been processed. Check your email for tracking details.</p>
-              <button 
-                onClick={() => navigate('/cart')}
-                className="bg-pink-600 text-white px-6 py-3 rounded-lg hover:bg-pink-700 transition-colors"
-              >
-                Back to Cart
-              </button>
-              </div>
+          <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white p-8 rounded-lg shadow-lg max-w-sm">
+              <CheckCircle className="text-green-500 w-12 h-12 mx-auto" />
+              <h3 className="text-2xl font-semibold text-center text-gray-800 mt-4">Order Placed Successfully!</h3>
+            </div>
           </div>
         )}
       </div>

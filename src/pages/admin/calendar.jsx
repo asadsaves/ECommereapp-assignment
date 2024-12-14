@@ -10,7 +10,7 @@ const CalendarPage = () => {
   return (
     <>
     <Helmet>
-      <title>Calendar | Admin | Mera Bestie</title>
+      <title>Calendar | Admin | SaiFashionZone</title>
     </Helmet>
     <div className="flex">
       <Sidebar />

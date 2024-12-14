@@ -23,11 +23,11 @@ export default function OccasionsPage() {
 
   return (
     <>
-    <Helmet>
-      <title>Occasions | Mera Bestie</title>
-    </Helmet>
+      <Helmet>
+        <title>Occasions | SaiFashionZone</title>
+      </Helmet>
       <Navbar />
-      <div className="min-h-screen bg-pink-50 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
+      <div className="min-h-screen bg-purple-50 py-12 px-4 sm:px-6 lg:px-8 animate-fadeIn">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl font-bold text-center text-gray-800 mb-8 animate-bounceIn">
             Shop by Occasion
@@ -60,7 +60,7 @@ function SearchInput({ value, onChange }) {
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-pink-500 focus:outline-none"
+        className="px-4 py-2 border rounded-md shadow-sm focus:ring-2 focus:ring-purple-500 focus:outline-none"
         placeholder="Search occasions..."
       />
       <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
@@ -70,10 +70,8 @@ function SearchInput({ value, onChange }) {
 
 function OccasionCard({ title, Icon, className }) {
   return (
-    <div
-      className={`bg-white p-6 rounded-lg shadow-md text-center ${className}`}
-    >
-      <Icon className="w-12 h-12 text-pink-500 mx-auto mb-4 animate-pulse" />
+    <div className={`bg-white p-6 rounded-lg shadow-md text-center ${className}`}>
+      <Icon className="w-12 h-12 text-purple-500 mx-auto mb-4 animate-pulse" />
       <h3 className="text-lg font-semibold text-gray-700 animate-flipIn">{title}</h3>
     </div>
   );

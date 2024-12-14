@@ -96,7 +96,7 @@ const Sidebar = () => {
             {/* Toggle button for small screens */}
             <button 
                 onClick={toggleSidebar}
-                className="fixed top-4 left-4 p-2 rounded-lg hover:bg-pink-200 lg:hidden z-50"
+                className="fixed top-4 left-4 p-2 rounded-lg hover:bg-purple-200 lg:hidden z-50"
             >
                 <Menu size={24} />
             </button>
@@ -158,7 +158,7 @@ const Sidebar = () => {
                             />
                             <button
                                 onClick={generateProductId}
-                                className="w-1/3 bg-pink-500 text-white p-2 rounded-r"
+                                className="w-1/3 bg-purple-500 text-white p-2 rounded-r"
                             >
                                 Generate
                             </button>
@@ -188,7 +188,7 @@ const Sidebar = () => {
                             </button>
                             <button
                                 onClick={handleSubmit}
-                                className="px-4 py-2 bg-pink-500 text-white rounded"
+                                className="px-4 py-2 bg-purple-500 text-white rounded"
                             >
                                 Save Product
                             </button>
@@ -197,14 +197,14 @@ const Sidebar = () => {
                 </div>
             )}
 
-            <div className={`fixed left-0 top-0 h-screen bg-pink-50 shadow-lg transition-all duration-300 flex flex-col 
+            <div className={`fixed left-0 top-0 h-screen bg-purple-50 shadow-lg transition-all duration-300 flex flex-col 
                 lg:translate-x-0 lg:w-64
                 ${isOpen ? 'w-64' : 'w-20'}`}
             >
                 <div className="flex items-center p-4">
                     {isOpen && (
                         <div className="text-2xl font-bold text-gray-800">
-                            Mera Bestie
+                            SaiFashionZone
                         </div>
                     )}
                 </div>
@@ -217,8 +217,8 @@ const Sidebar = () => {
                                     to={item.path}
                                     className={`flex items-center p-2 rounded-lg transition-colors
                                         ${location.pathname === item.path 
-                                            ? 'bg-pink-200 text-pink-800' 
-                                            : 'text-gray-700 hover:bg-pink-100'}
+                                            ? 'bg-purple-200 text-purple-800' 
+                                            : 'text-gray-700 hover:bg-purple-100'}
                                         ${isOpen ? 'justify-start space-x-4' : 'justify-center'}`}
                                 >
                                     <span className="text-xl">{item.icon}</span>
@@ -236,7 +236,7 @@ const Sidebar = () => {
                         </p>
                         <button 
                             onClick={() => setShowDialog(true)}
-                            className="w-full bg-pink-300 text-white py-2 rounded hover:bg-pink-400 mb-2"
+                            className="w-full bg-purple-300 text-white py-2 rounded hover:bg-purple-400 mb-2"
                         >
                             + Add Product
                         </button>
@@ -251,7 +251,7 @@ const Sidebar = () => {
                     </div>
 
                     <footer className={`text-center text-gray-500 text-sm p-4 ${isOpen ? 'block' : 'hidden'}`}>
-                        Mera Bestie Admin Dashboard © 2023
+                    SaiFashionZone Admin Dashboard © 2024
                     </footer>
                 </div>
             </div>

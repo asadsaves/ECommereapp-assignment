@@ -121,9 +121,9 @@ const Product = () => {
 
   return (
     <div className="flex">
-    <Helmet>
-      <title>Products | Admin | Mera Bestie</title>
-    </Helmet>
+      <Helmet>
+        <title>Products | Admin | SaiFashionZone</title>
+      </Helmet>
       <Sidebar />
       <div className="flex-1 p-8 ml-[5rem] lg:ml-64 bg-pink-50 min-h-screen">
         <div className="mb-6 flex justify-between items-center">
@@ -220,7 +220,7 @@ const Product = () => {
                         type="number"
                         className="w-20 border rounded px-2 py-1"
                         value={editValues.inStockValue}
-                        onChange={(e) => setEditValues({...editValues, inStockValue: e.target.value})}
+                        onChange={(e) => setEditValues({ ...editValues, inStockValue: e.target.value })}
                       />
                     ) : (
                       product.inStockValue || '-'
@@ -232,36 +232,34 @@ const Product = () => {
                         type="number"
                         className="w-20 border rounded px-2 py-1"
                         value={editValues.soldStockValue}
-                        onChange={(e) => setEditValues({...editValues, soldStockValue: e.target.value})}
+                        onChange={(e) => setEditValues({ ...editValues, soldStockValue: e.target.value })}
                       />
                     ) : (
                       product.soldStockValue || '-'
                     )}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <select
-                      className="border rounded px-2 py-1 bg-white"
-                      value={product.visibility?.toString() || 'false'}
-                      onChange={(e) => handleVisibilityChange(product.productId, e.target.value)}
+                    <button
+                      className={`px-4 py-2 text-xs font-semibold rounded-md ${product.visibility ? 'bg-green-500' : 'bg-red-500'} text-white`}
+                      onClick={() => handleVisibilityChange(product.productId, product.visibility ? 'false' : 'true')}
                     >
-                      <option value="true">Visible</option>
-                      <option value="false">Hidden</option>
-                    </select>
+                      {product.visibility ? 'Visible' : 'Hidden'}
+                    </button>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {editingId === product.productId ? (
                       <button
                         onClick={() => handleSave(product.productId)}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="px-4 py-2 text-xs font-semibold text-white bg-blue-500 rounded-md"
                       >
-                        <Save size={18} />
+                        <Save size={14} />
                       </button>
                     ) : (
                       <button
                         onClick={() => handleEdit(product)}
-                        className="text-blue-600 hover:text-blue-900"
+                        className="px-4 py-2 text-xs font-semibold text-white bg-yellow-500 rounded-md"
                       >
-                        <Pencil size={18} />
+                        <Pencil size={14} />
                       </button>
                     )}
                   </td>
