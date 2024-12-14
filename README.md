@@ -33,10 +33,9 @@ Before you begin, ensure you have the following installed:
 ### Clone the Repository
 
 Clone the repository to your local machine using the following command:
-```bash
 git clone https://github.com/asadsaves/ECommereapp-assignment.git
 
-# ECommereapp Assignment - Learnings & Technologies
+## ECommereapp Assignment - Learnings & Technologies
 
 This project was an opportunity to work with various modern technologies and tools to build a functional e-commerce application. Throughout the process, I gained hands-on experience in React.js, state management, API integration, and deployment.
 
